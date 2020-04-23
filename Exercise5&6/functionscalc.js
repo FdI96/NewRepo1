@@ -17,7 +17,11 @@ var band= false;
 var buttonOpOn= false;
 
 var borrar
-const concha= 'la concha de tu madre'
+
+var result
+var aux = ''
+var recolector
+var auxcalcu
 
 
 console.log(val1)
@@ -29,7 +33,15 @@ console.log(num2)
 Array.from(buttonlist).forEach(addlistener)
 function addlistener(element){
   element.addEventListener("click", function (e){
-   
+   if (result!=undefined){
+    aux=aux + (e.target.innerHTML)
+    mostrarresultado.innerHTML=recolector + aux;
+    num2=Number(aux)
+
+    
+    
+    
+   }else{
     if (buttonOpOn==true){
      val2 =val2+(e.target.innerHTML);
      
@@ -37,6 +49,7 @@ function addlistener(element){
      num2=Number(val2) 
      console.log(val2);
      console.log(num2)
+     
     }
     else { 
    
@@ -47,7 +60,9 @@ function addlistener(element){
       console.log(val1);
       console.log(num1);
     };
-  } );
+   } 
+  }
+   );
   }
  
 
@@ -55,6 +70,16 @@ function addlistener(element){
 // obtener operador
 function addlistenerO(elementO){
   elementO.addEventListener("click", function (eO){
+    console.log(result)
+    if (result!=undefined){
+      operador=eO.target.innerHTML
+      mostrarresultado.innerHTML=String(result) + operador
+      recolector=mostrarresultado.innerHTML
+
+
+
+    }
+    else{
     buttonOpOn=true;
     
     console.log(band)
@@ -63,14 +88,34 @@ function addlistenerO(elementO){
     mostrarresultado.innerHTML=mostrarresultado.innerHTML + '' + operador + '';
     recolectorNum=mostrarresultado.innerHTML;
     console.log(operador);
-  })
+  
+  }
+  }
+  )
 }
 
 // calcular y mostrar resultado
 Array.from(buttonlistO).forEach(addlistenerO);
 mostrarresultado=document.getElementById("mostrarresultado")
 document.getElementById('igual').addEventListener("click", function (e1){
-  console.log(calculadora(val1,val2,operador))
+  if (result!=undefined){
+    num1=result
+    
+    result=calculadora(num1,num2,operador)
+    mostrarresultado.innerHTML=String(calculadora(num1,num2,operador) + ' la concha de tu madre')
+    buttonOpOn=false;
+    val1='';
+    val2='';
+    operador=undefined;
+    aux=''
+    
+
+  }
+  else{
+  
+  result=calculadora(num1,num2,operador);
+  
+  console.log(result)
   
   mostrarresultado.innerHTML=String(calculadora(num1,num2,operador) + ' la concha de tu madre');
   
@@ -79,6 +124,8 @@ document.getElementById('igual').addEventListener("click", function (e1){
   val1='';
   val2='';
   operador=undefined;
+  
+}
 });
 
 
@@ -91,6 +138,7 @@ document.getElementById('borrar').addEventListener("click", function (b){
   num1=undefined
   num2=undefined
   buttonOpOn=false
+  result=undefined
 }
 
 )
